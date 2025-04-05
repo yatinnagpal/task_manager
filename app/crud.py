@@ -29,3 +29,14 @@ def update_task(task_id: UUID, request: schemas.TaskUpdate, db: Session = Depend
     db.commit()
     db.refresh(task)
     return task
+
+
+def delete_task(task_id: UUID, db:Session = Depends(get_db)):
+    task = db.query(models.Task).filter(models.Task.id == task_id).first()
+
+    if not task:
+        raise HTTPException(status_code=404, detail='Task not found')
+    
+    db.delete(task)
+    db.commit()
+    return {"detail: Task deleted successfully"}

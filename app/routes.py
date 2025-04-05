@@ -20,3 +20,8 @@ def get_tasks(limit: int = 10, skip: int = 0, db: Session = Depends(get_db)):
 @router.put("/update_task/{task_id}")
 def update_task(task_id: UUID, request: schemas.TaskUpdate, db: Session = Depends(get_db)):
     return crud.update_task(task_id, request, db)
+
+
+@router.delete('/delete_task/{task_id}', status_code=204)
+def delete_task(task_id: UUID, db: Session = Depends(get_db)):
+    return crud.delete_task(task_id, db)
