@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends
 from . import schemas, models, crud
 from sqlalchemy.orm import Session
 from app.database import get_db, engine
+from uuid import UUID
 
 router = APIRouter()
 
@@ -15,3 +16,7 @@ def create_task(request:schemas.Task, db : Session = Depends(get_db)):
 @router.get("/get_task", response_model=list[schemas.Task])
 def get_tasks(limit: int = 10, skip: int = 0, db: Session = Depends(get_db)):
     return crud.get_task(limit, skip, db)
+
+@router.put("/update_task/{task_id}")
+def update_task(task_id: UUID, request: schemas.TaskUpdate, db: Session = Depends(get_db)):
+    return crud.update_task(task_id, request, db)

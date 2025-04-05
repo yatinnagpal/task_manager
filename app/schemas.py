@@ -12,3 +12,8 @@ class Task(BaseModel):
     title: str
     description: Optional[str] = None
     status: StatusEnum
+
+
+class TaskUpdate(BaseModel):
+    title: str
+    status: StatusEnum
